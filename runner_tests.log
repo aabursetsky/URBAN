@@ -1,0 +1,10 @@
+2024-10-12 02:53:16,257 | INFO | "test_run" выполнен успешно
+2024-10-12 02:53:16,259 | WARNING | Неверная скорость для Runner
+Traceback (most recent call last):
+  File "C:\Users\McCur\PycharmProjects\pythonProject\tests_12_4.py", line 20, in test_walk
+    runner_walk = rat.Runner(name="Walk", speed=-10)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\McCur\PycharmProjects\pythonProject\rt_with_exceptions.py", line 11, in __init__
+    raise ValueError(f'Скорость не может быть отрицательной, сейчас {speed}')
+ValueError: Скорость не может быть отрицательной, сейчас -10
+2024-10-12 02:53:16,271 | INFO | "test_walk" выполнен успешно
