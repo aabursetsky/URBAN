@@ -59,11 +59,11 @@ async def set_weight(message, state):
 async def send_calories(message, state):
     await state.update_data(weight=message.text)
     data = await state.get_data()
-    await message.answer("Ваша норма каллорий "
+    await message.answer("Ваша норма калорий "
                          f"{10 * float(data['weight']) + 6.25 * float(data['growth']) - 5 * float(data['age']) + 5}"
                          " если Вы мужчина")
 
-    await message.answer("Ваша норма каллорий "
+    await message.answer("Ваша норма каллрий "
                          f"{10 * float(data['weight']) + 6.25 * float(data['growth']) - 5 * float(data['age']) - 161}"
                          " если Вы женщина")
     await state.finish()
