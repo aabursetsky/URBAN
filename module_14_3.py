@@ -10,7 +10,6 @@ api = ""
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
-
 kb1 = InlineKeyboardMarkup()
 button3 = InlineKeyboardButton(text='Рассчитать норму калорий', callback_data='calories')
 button4 = InlineKeyboardButton(text='Формулы расчёта', callback_data='formulas')
@@ -29,32 +28,37 @@ kb = ReplyKeyboardMarkup(
     keyboard=[[
         KeyboardButton(text='Рассчитать'),
         KeyboardButton(text='Информация')
-        ],
+    ],
         [KeyboardButton(text='Купить')]
-], resize_keyboard = True
+    ], resize_keyboard=True
 )
 
 buy_menu = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-        InlineKeyboardButton(text="Product1", callback_data="product_buying"),
-        InlineKeyboardButton(text="Product2", callback_data="product_buying"),
-        InlineKeyboardButton(text="Product3", callback_data="product_buying"),
-        InlineKeyboardButton(text="Product4", callback_data="product_buying")
+            InlineKeyboardButton(text="Продукт1", callback_data="product_buying"),
+            InlineKeyboardButton(text="Продукт2", callback_data="product_buying"),
+            InlineKeyboardButton(text="Продукт3", callback_data="product_buying"),
+            InlineKeyboardButton(text="Продукт4", callback_data="product_buying")
         ]
     ]
 )
 
 @dp.message_handler(text='Купить')
 async def get_buying_list(message):
-    with open("1.png", "rb") as Zn:
-        await message.answer_photo(Zn, f"Название: Product1 | Описание: Цинк+Витамин C | Цена: {1 * 100}")
-    with open("2.png", "rb") as Mg:
-        await message.answer_photo(Mg, f"Название: Product2 | Описание: Магний хелат | Цена: {2 * 100}")
-    with open("3.png", "rb") as Cr:
-        await message.answer_photo(Cr, f"Название: Product3 | Описание: Хром хелат | Цена: {3 * 100}")
-    with open("4.png", "rb") as D3:
-        await message.answer_photo(D3, f"Название: Product4 | Описание: Витамин D3 | Цена: {4 * 100}")
+    product_name = ["Zn", "Mg", "Cr", "D3"]
+    product_des = ["Цинк+Витамин C", "Магний хелат", "Хром хелат", "Витамин D3"]
+    for i in range(4):
+        await message.answer_photo(open(f"{i +1}.png", "rb"),
+                                   f"Название: {product_name[i]} | Описание: {product_des[i]} | Цена: {100 * (i + 1)}")
+    # with open("1.png", "rb") as Zn:
+    #     await message.answer_photo(Zn, f"Название: Product1 | Описание: Цинк+Витамин C | Цена: {1 * 100}")
+    # with open("2.png", "rb") as Mg:
+    #     await message.answer_photo(Mg, f"Название: Product2 | Описание: Магний хелат | Цена: {2 * 100}")
+    # with open("3.png", "rb") as Cr:
+    #     await message.answer_photo(Cr, f"Название: Product3 | Описание: Хром хелат | Цена: {3 * 100}")
+    # with open("4.png", "rb") as D3:
+    #     await message.answer_photo(D3, f"Название: Product4 | Описание: Витамин D3 | Цена: {4 * 100}")
     await message.answer("Выберите продукт для покупки:", reply_markup=buy_menu)
 
 
@@ -62,6 +66,7 @@ async def get_buying_list(message):
 async def send_confirm_message(call):
     await call.message.answer("Вы успешно приобрели продукт!")
     await call.answer()
+
 
 @dp.message_handler(commands=['start'])
 async def start(message):
@@ -119,7 +124,6 @@ async def send_calories(message, state):
                          f"{10 * float(data['weight']) + 6.25 * float(data['growth']) - 5 * float(data['age']) - 161}"
                          " если Вы женщина")
     await state.finish()
-
 
 
 @dp.message_handler()  # Реакция на всё остальное
