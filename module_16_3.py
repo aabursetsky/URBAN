@@ -20,6 +20,10 @@ async def create_user(username: Annotated[str, Path(min_length=5,
                                         le=120,
                                         description='Enter age',
                                         example='24')) -> str:
+    """
+    :param username:
+    :param age:
+    """
     user_id = str(int(max(users, key=int)) + 1)
     users[user_id] = f"Имя: {username}, возраст: {age}"
     return f"User {user_id} is registered"
@@ -34,12 +38,20 @@ async def update_user(user_id: str, username: Annotated[str, Path(min_length=5,
                                         le=120,
                                         description='Enter age',
                                         example='24')) -> str:
+    """
+    :param user_id:
+    :param username:
+    :param age:
+    """
     users[user_id] = f"Имя: {username}, возраст: {age}"
     return f"The user {user_id} is updated"
 
 # Удаление пользователя
 @app.delete("/user/{user_id}")
 async def delete_user(user_id: str) -> str:
+    """
+    :param user_id:
+    """
     if user_id in users:
         users.pop(user_id)
         return f"User {user_id} has been deleted"
